@@ -2700,14 +2700,16 @@ class AlkaliAtom(object):
             en[ctr, :] = eVal
 
         # Determine States
-        eVal, eVec = eigh(Hhfs + 1e-4 * Hz)
+        eVal, eVec = eigh(Hhfs + 1e-7 * Hz)
         eVec = np.matrix(eVec)
         f = np.zeros(N)
         mf = np.zeros(N)
         for ctr in range(N):
             f2 = eVec[:, ctr].conj().T * F2 * eVec[:, ctr]
-            f[ctr] = np.round(
-                1 / 2 * (-1 + np.sqrt(1 + 4 * np.real(f2[0, 0]))))
+	    print(f2)	
+            f[ctr] = 1 / 2 * (-1 + np.sqrt(1 + 4 * np.real(f2[0, 0])))
+	    print(f[ctr])
+	    f[ctr]=np.round(f[ctr])
             m = eVec[:, ctr].conj().T * Fz * eVec[:, ctr]
             mf[ctr] = np.round(np.real(m[0, 0]))
 
